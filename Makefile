@@ -1,17 +1,17 @@
 # LIFAP6 - Automne 2017 - R. Chaine
-
-main.ex : main.o table.o
+CFLAGS += -std=c++11
+main.ex : main.o arbre.o
 # L'executable main.ex doit être remis à jour si certains des fichiers 
 # main.o liste.o et element.o sont plus rêcents
-	g++ main.o table.o
+	g++ main.o arbre.o $(CFLAGS)
 
-main.o : main.cpp table.h
+main.o : main.cpp arbre.h
 # Le fichier objet main.o doit être remis à jour si certains des fichiers
 # main.cpp liste.h et element.h sont plus rêcents
-	g++ -Wall -ansi -pedantic -c main.cpp
+	g++ -Wall -ansi -pedantic -c main.cpp $(CFLAGS)
 
-table.o : table.cpp table.h
-	g++ -Wall -c table.cpp
+arbre.o : arbre.cpp arbre.h
+	g++ -Wall -c arbre.cpp $(CFLAGS)
 
 clean :
 	-rm *.o *~
