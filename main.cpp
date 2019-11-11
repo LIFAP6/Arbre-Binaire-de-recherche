@@ -16,4 +16,5 @@ int main()
     arbre.ajoutElement(2, arbre.racineTable());
     arbre.ajoutElement(12, arbre.racineTable());
     arbre.affichageTable(0, arbre.racineTable());
+    arbre.ajoutElement(12, arbre.racineTable());
 }

@@ -14,6 +14,9 @@
 
             Noeud*& getElementDroite();
             Noeud*& getElementGauche();
+
+            void setElementGauche(Noeud *&nouveauNoeudGauche);
+            void setElementDroite(Noeud *&nouveauNoeudDroite);
     };
 
     class ArbreBinaireRecherche{
