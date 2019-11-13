@@ -1,6 +1,7 @@
 #include "arbre.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <exception>
 
 /**
  * Constructeur par défaut
@@ -16,18 +17,21 @@ ArbreBinaireRecherche::ArbreBinaireRecherche(){
  * Précondition : un arbre binaire de recherche, un élément à trouver
  * Postcondition : un arbre binaire de recherche, un élément à trouver, un élement trouvé si il est présent dans la table, pointeur nul sinon
  */
-Noeud** ArbreBinaireRecherche::rechercheElement(int element, Noeud *&noeudActuel){
-    Noeud **noeud;
+Noeud*& ArbreBinaireRecherche::rechercheElement(int element, Noeud *&noeudActuel){
+    Noeud *&returnedNoeud = noeudActuel;
     //Tant que l'élément n'a pas été trouvé
     if(noeudActuel->getElement()!=element){
         //Element plus grand-> sous-arbre de droite
         if(noeudActuel->getElement()>element){
-            noeud = rechercheElement(element, noeudActuel->getElementDroite());
+            returnedNoeud = rechercheElement(element, noeudActuel->getElementDroite());
         }else if(noeudActuel->getElement()<element){
-            noeud = rechercheElement(element, noeudActuel->getElementGauche());
+            returnedNoeud = rechercheElement(element, noeudActuel->getElementGauche());
         }else{
-            return &noeudActuel;
+            return returnedNoeud;
         }
+    }else{
+        returnedNoeud = noeudActuel;
+        return returnedNoeud;
     }
 }
 
@@ -36,22 +40,21 @@ Noeud** ArbreBinaireRecherche::rechercheElement(int element, Noeud *&noeudActuel
  * 
  */
 int ArbreBinaireRecherche::ajoutElement(int nouvelElement, Noeud* &noeudActuel){
-    printf("Élément à ajouter : %d\n", nouvelElement);
     //Aucun élément dans la table
     if (noeudActuel == nullptr)
     {
         printf("L'arbre binaire de recherche est vide : ajout du 1er élément.\n");
         Noeud *noeud = new Noeud(nouvelElement);
-        racine = noeud;
+        noeudActuel = noeud;
     }
     //L'élément à ajouter est plus petit que celui du noeud actuel -> à ajouter dans le sous-élément de gauche
-    else if(noeudActuel->getElementGauche() == nullptr && noeudActuel->getElement()>nouvelElement){
+    else if(noeudActuel->getElementGauche() == nullptr && noeudActuel->getElement() > nouvelElement){
         Noeud* noeud = new Noeud(nouvelElement);
         noeudActuel->getElementGauche() = noeud;
         printf("Ajout de l'élément à gauche du noeud %d.\n", noeudActuel->getElement());
     }
     //L'élément à ajouter est plus grand que celui du noeud actuel -> à ajouter dans le sous-élément de droite
-    else if(noeudActuel->getElementDroite() == nullptr && noeudActuel->getElement()<=nouvelElement){
+    else if(noeudActuel->getElementDroite() == nullptr && noeudActuel->getElement()<nouvelElement){
         Noeud* noeud = new Noeud(nouvelElement);
         noeudActuel->getElementDroite() = noeud;
         printf("Ajout de l'élément à droite du noeud %d.\n", noeudActuel->getElement());
@@ -65,8 +68,14 @@ int ArbreBinaireRecherche::ajoutElement(int nouvelElement, Noeud* &noeudActuel){
         else
         //On passe au sous-arbre de droite : l'élément est supérieur à celui du noeud
         {
-            printf("On passe à droite.\n");
-            ajoutElement(nouvelElement, noeudActuel->getElementDroite());
+            if(noeudActuel->getElementDroite()->getElement()<nouvelElement){
+                Noeud *noeud = new Noeud(nouvelElement);
+                noeud->setElementDroite(noeudActuel->getElementGauche());
+                noeudActuel->setElementDroite(noeud);
+            }else{
+                printf("On passe à gauche.\n");
+                ajoutElement(nouvelElement, noeudActuel->getElementDroite());
+            }
         }
     }
     printf("Fin de l'ajout de l'élément %d.\n\n", nouvelElement);
@@ -84,7 +93,8 @@ void ArbreBinaireRecherche::affichageTable(int quandAfficher, Noeud* &noeudActue
         if(quandAfficher==0){
             printf("Adresse : %d, Noeud actuel : %d.\n",&noeudActuel,noeudActuel->getElement());
         }
-        if(noeudActuel->getElementGauche()!=nullptr){
+        if (noeudActuel->getElementGauche() != nullptr)
+        {
             affichageTable(quandAfficher, noeudActuel->getElementGauche());
         }
         if(quandAfficher==1){
@@ -109,6 +119,39 @@ Noeud*& ArbreBinaireRecherche::racineTable(){
     return racine;
 }
 
+void Noeud::setElementDroite(Noeud* &nouveauSousArbreDroite){
+    droite = nouveauSousArbreDroite;
+}
+
+void Noeud::setElementGauche(Noeud* &nouveauSousArbreGauche){
+    gauche = nouveauSousArbreGauche;
+}
+
+/**
+ * Destructeur de l'arbre binaire de recherche
+ */
+ArbreBinaireRecherche::~ArbreBinaireRecherche(){
+    printf("Suppression de l'arbre binaire de recherche.\n");
+    delete racine;
+}
+
+/**
+ * Surcharge de l'opérateur d'affectation
+ */
+ArbreBinaireRecherche ArbreBinaireRecherche::operator=(const ArbreBinaireRecherche &autreArbre){
+    ArbreBinaireRecherche nouvelArbre = ArbreBinaireRecherche();
+    nouvelArbre.racine = new Noeud(*autreArbre.racine);
+    return nouvelArbre;
+}
+
+/**
+ * Constructeur par copie
+ */
+ArbreBinaireRecherche::ArbreBinaireRecherche(const ArbreBinaireRecherche &autreArbre){
+    printf("Constructeur par copie.\n");
+    racine = new Noeud(*autreArbre.racine);
+}
+
 /**
  * Constructeur par paramètre du noeud
  * Précondition : un noeud vide
@@ -119,6 +162,12 @@ Noeud::Noeud(int newElement){
     element = newElement;
 }
 
+Noeud::Noeud(){
+    element = -1;
+    gauche = nullptr;
+    droite = nullptr;
+}
+
 /**
  * Constructeur par copie du noeud
  * Précondition : un noeud vide, un noeud instancié
@@ -126,9 +175,14 @@ Noeud::Noeud(int newElement){
  * Postcondition : deux noeuds indentiques
  */
 Noeud::Noeud(const Noeud& n){
+    printf("Constructeur par copie de %d.\n", n.element);
     element = n.element;
-    droite = n.droite;
-    gauche = n.gauche;
+    if(n.gauche !=nullptr){
+        gauche = new Noeud(*n.gauche);
+    }
+    if(n.droite !=nullptr){
+        droite = new Noeud(*n.droite);
+    }
 }
 
 /**
@@ -174,4 +228,35 @@ int Noeud::nombreElements(Noeud* &noeudActuel, int nbElements){
             nbElements = nbElements + 1 + nombreElements(noeudActuel->getElementDroite(), nbElements);
         }
     }
+}
+
+Noeud::~Noeud(){
+    printf("Suppression du noeud %d.\n", element);
+    if (getElementGauche() != nullptr)
+    {
+        printf("Suppression de sa partie gauche.\n");
+        delete getElementGauche();
+    }
+    if(getElementDroite() != nullptr){
+        printf("Suppression de sa partie droite.\n");
+        delete getElementDroite();
+    }
+    gauche = nullptr;
+    droite = nullptr;
+    element = -1;
+    printf("Élement supprimé.\n\n");
+}
+
+Noeud& Noeud::operator=(const Noeud &autreNoeud){
+    printf("Opérateur d'affectation pour le noeud %d.\n", autreNoeud.element);
+    if(this != &autreNoeud){
+        element = autreNoeud.element;
+        gauche = autreNoeud.gauche;
+        droite = autreNoeud.droite;
+    }
+    return *this;
+}
+
+bool Noeud::operator<(const Noeud& autreNoeud){
+    return element < autreNoeud.element;
 }
