@@ -29,6 +29,7 @@
     class ArbreBinaireRecherche{
         private:
             Noeud *racine;
+            int sizeRec(int currentSize, Noeud* &noeudActuel);
 
         public:
             //Constructeur par défaut
@@ -47,5 +48,6 @@
             ~ArbreBinaireRecherche();
 
             ArbreBinaireRecherche operator=(const ArbreBinaireRecherche &autreArbre);
+            int size();
     };
 #endif
