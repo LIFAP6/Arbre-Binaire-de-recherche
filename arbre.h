@@ -1,34 +1,46 @@
+#include <iostream>
+using namespace std;
 #ifndef table
 #define table
-    class Noeud{
+    class Noeud
+    {
         private:
             int element;
             Noeud *droite;
             Noeud *gauche;
+
         public:
             Noeud(int element);
-            Noeud(const Noeud& n);
+            Noeud(const Noeud &n);
             Noeud();
             void setElement(int element);
             int getElement();
             int getElement() const;
             int nombreElements(Noeud *&noeudActuel, int nbElements);
+            int nombreElements(Noeud *&noeudActuel, int nbElements)const;
 
-            Noeud*& getElementDroite();
-            Noeud*& getElementGauche();
+            //Getters
+            //pas const
+            Noeud *&getElementDroite();
+            Noeud *&getElementGauche();
+
+            //const
+            Noeud *&getElementDroite()const;
+            Noeud *&getElementGauche()const;
 
             void setElementGauche(Noeud *&nouveauNoeudGauche);
             void setElementDroite(Noeud *&nouveauNoeudDroite);
 
             ~Noeud();
 
-            Noeud& operator=(const Noeud &autreNoeud);
+            Noeud &operator=(const Noeud &autreNoeud);
             bool operator<(const Noeud &autreNoeud);
     };
 
     class ArbreBinaireRecherche{
         private:
             Noeud *racine;
+            int sizeRec(int currentSize, Noeud* &noeudActuel);
 
         public:
             //Constructeur par défaut
@@ -47,5 +59,7 @@
             ~ArbreBinaireRecherche();
 
             ArbreBinaireRecherche operator=(const ArbreBinaireRecherche &autreArbre);
+            int size();
+            int size()const;
     };
 #endif

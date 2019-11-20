@@ -23,9 +23,13 @@ Noeud*& ArbreBinaireRecherche::rechercheElement(int element, Noeud *&noeudActuel
     if(noeudActuel->getElement()!=element){
         //Element plus grand-> sous-arbre de droite
         if(noeudActuel->getElement()>element){
-            returnedNoeud = rechercheElement(element, noeudActuel->getElementDroite());
+            if(noeudActuel->getElementDroite()!=nullptr){
+                returnedNoeud = rechercheElement(element, noeudActuel->getElementDroite());
+            }
         }else if(noeudActuel->getElement()<element){
-            returnedNoeud = rechercheElement(element, noeudActuel->getElementGauche());
+            if(noeudActuel->getElementGauche()!=nullptr){
+                returnedNoeud = rechercheElement(element, noeudActuel->getElementGauche());
+            }
         }else{
             return returnedNoeud;
         }
@@ -62,29 +66,14 @@ int ArbreBinaireRecherche::ajoutElement(int nouvelElement, Noeud* &noeudActuel){
     else{
         //On passe au sous-arbre de gauche : l'élément est inférieur à celui du noeud
         if(noeudActuel->getElement()<nouvelElement){
-            printf("On passe à droite.\n");
-            //Le noeud à ajouter est plus petit que le noeud en cours, mais est plus grand que le sous-noeud de gauche et plus petit que celui de droite
-            if(noeudActuel->getElementDroite()->getElement()<nouvelElement){
-                Noeud *noeud = new Noeud(nouvelElement);
-                noeud->setElementGauche(noeudActuel->getElementGauche());
-                noeudActuel->setElementGauche(noeud);
-            }
-            else
-            {
-                ajoutElement(nouvelElement, noeudActuel->getElementGauche());
-            }
+            printf("On passe à gauche.\n");
+            ajoutElement(nouvelElement, noeudActuel->getElementGauche());
         }
         else if(noeudActuel->getElement()>nouvelElement)
         //On passe au sous-arbre de droite : l'élément est supérieur à celui du noeud
         {
-            if(noeudActuel->getElementDroite()->getElement()<nouvelElement){
-                Noeud *noeud = new Noeud(nouvelElement);
-                noeud->setElementDroite(noeudActuel->getElementGauche());
-                noeudActuel->setElementDroite(noeud);
-            }else{
-                printf("On passe à gauche.\n");
-                ajoutElement(nouvelElement, noeudActuel->getElementDroite());
-            }
+            printf("On passe à droite.\n");
+            ajoutElement(nouvelElement, noeudActuel->getElementDroite());
         }
     }
     printf("Fin de l'ajout de l'élément %d.\n\n", nouvelElement);
@@ -137,6 +126,14 @@ void Noeud::setElementGauche(Noeud* &nouveauSousArbreGauche){
 }
 
 /**
+ * Constructeur par copie
+ */
+ArbreBinaireRecherche::ArbreBinaireRecherche(const ArbreBinaireRecherche &autreArbre){
+    printf("Constructeur par copie.\n");
+    racine = new Noeud(*autreArbre.racine);
+}
+
+/**
  * Destructeur de l'arbre binaire de recherche
  */
 ArbreBinaireRecherche::~ArbreBinaireRecherche(){
@@ -148,17 +145,37 @@ ArbreBinaireRecherche::~ArbreBinaireRecherche(){
  * Surcharge de l'opérateur d'affectation
  */
 ArbreBinaireRecherche ArbreBinaireRecherche::operator=(const ArbreBinaireRecherche &autreArbre){
-    ArbreBinaireRecherche nouvelArbre = ArbreBinaireRecherche();
-    nouvelArbre.racine = new Noeud(*autreArbre.racine);
-    return nouvelArbre;
+    printf("Appel de l'opérateur d'affectation.\n");
+    if(autreArbre.racine != nullptr){
+        racine = new Noeud(*autreArbre.racine);
+    }
+    return *this;
 }
 
-/**
- * Constructeur par copie
- */
-ArbreBinaireRecherche::ArbreBinaireRecherche(const ArbreBinaireRecherche &autreArbre){
-    printf("Constructeur par copie.\n");
-    racine = new Noeud(*autreArbre.racine);
+int ArbreBinaireRecherche::size(){
+    int size = 0;
+    Noeud *&noeudActuel = racine;
+    if (noeudActuel == nullptr){
+        return size;
+    }else{
+        size = size + sizeRec(size, noeudActuel);
+        return size;
+    }
+}
+
+int ArbreBinaireRecherche::sizeRec(int currentSize, Noeud*& noeudActuel){
+    if (noeudActuel == nullptr) {
+        return 0;
+    }else if(noeudActuel->getElementDroite() == nullptr && noeudActuel->getElementGauche() == nullptr){
+        return 1;
+    }else{
+        if(noeudActuel->getElementGauche() != nullptr){
+            currentSize = currentSize + sizeRec(currentSize, noeudActuel->getElementGauche());
+        }
+        if(noeudActuel->getElementDroite() != nullptr){
+            currentSize = currentSize + sizeRec(currentSize, noeudActuel->getElementDroite());
+        }
+    }
 }
 
 /**
@@ -260,8 +277,12 @@ Noeud& Noeud::operator=(const Noeud &autreNoeud){
     printf("Opérateur d'affectation pour le noeud %d.\n", autreNoeud.element);
     if(this != &autreNoeud){
         element = autreNoeud.element;
-        gauche = autreNoeud.gauche;
-        droite = autreNoeud.droite;
+        if(autreNoeud.gauche != nullptr){
+            gauche = new Noeud(*autreNoeud.gauche);
+        }
+        if(autreNoeud.droite != nullptr){
+            droite = new Noeud(*autreNoeud.droite);
+        }
     }
     return *this;
 }

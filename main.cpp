@@ -18,12 +18,17 @@ int main()
     arbre->ajoutElement(12, arbre->racineTable());
     arbre->ajoutElement(19, arbre->racineTable());
     arbre->affichageTable(0, arbre->racineTable());
+    cout << "Taille de l'arbre : " << arbre->size() << "." << endl;
     Noeud *&noeud = arbre->rechercheElement(3, arbre->racineTable());
     cout << "Élement du noeud : " << noeud->getElement() << endl;
     ArbreBinaireRecherche *arbre2 = new ArbreBinaireRecherche(*arbre);
-    ArbreBinaireRecherche arbre3 = *arbre2;
+    ArbreBinaireRecherche *arbre3 = new ArbreBinaireRecherche();
+    *arbre3 = *arbre;
     delete arbre;
     arbre2->affichageTable(0,arbre2->racineTable());
+    cout << "Taille de l'arbre : " << arbre2->size() << "." << endl;
     delete arbre2;
-    arbre3.affichageTable(0, arbre3.racineTable());
+    arbre3->affichageTable(0, arbre3->racineTable());
+    cout << "Taille de l'arbre : " << arbre3->size() << "." << endl;
+    delete arbre3;
 }
