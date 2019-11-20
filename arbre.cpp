@@ -66,29 +66,14 @@ int ArbreBinaireRecherche::ajoutElement(int nouvelElement, Noeud* &noeudActuel){
     else{
         //On passe au sous-arbre de gauche : l'élément est inférieur à celui du noeud
         if(noeudActuel->getElement()<nouvelElement){
-            printf("On passe à droite.\n");
-            //Le noeud à ajouter est plus petit que le noeud en cours, mais est plus grand que le sous-noeud de gauche et plus petit que celui de droite
-            if(noeudActuel->getElementDroite()->getElement()<nouvelElement){
-                Noeud *noeud = new Noeud(nouvelElement);
-                noeud->setElementGauche(noeudActuel->getElementGauche());
-                noeudActuel->setElementGauche(noeud);
-            }
-            else
-            {
-                ajoutElement(nouvelElement, noeudActuel->getElementGauche());
-            }
+            printf("On passe à gauche.\n");
+            ajoutElement(nouvelElement, noeudActuel->getElementGauche());
         }
         else if(noeudActuel->getElement()>nouvelElement)
         //On passe au sous-arbre de droite : l'élément est supérieur à celui du noeud
         {
-            if(noeudActuel->getElementDroite()->getElement()<nouvelElement){
-                Noeud *noeud = new Noeud(nouvelElement);
-                noeud->setElementDroite(noeudActuel->getElementGauche());
-                noeudActuel->setElementDroite(noeud);
-            }else{
-                printf("On passe à gauche.\n");
-                ajoutElement(nouvelElement, noeudActuel->getElementDroite());
-            }
+            printf("On passe à droite.\n");
+            ajoutElement(nouvelElement, noeudActuel->getElementDroite());
         }
     }
     printf("Fin de l'ajout de l'élément %d.\n\n", nouvelElement);
