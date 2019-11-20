@@ -6,27 +6,24 @@ using namespace std;
     {
         private:
             int element;
+            int hauteur;
             Noeud *droite;
             Noeud *gauche;
 
         public:
             Noeud(int element);
+            Noeud(int element, int hauteur);
             Noeud(const Noeud &n);
             Noeud();
             void setElement(int element);
+            void setHauteur(int nouvelleHauteur);
+            int getHauteur();
             int getElement();
-            int getElement() const;
             int nombreElements(Noeud *&noeudActuel, int nbElements);
-            int nombreElements(Noeud *&noeudActuel, int nbElements)const;
 
             //Getters
-            //pas const
             Noeud *&getElementDroite();
             Noeud *&getElementGauche();
-
-            //const
-            Noeud *&getElementDroite()const;
-            Noeud *&getElementGauche()const;
 
             void setElementGauche(Noeud *&nouveauNoeudGauche);
             void setElementDroite(Noeud *&nouveauNoeudDroite);
@@ -51,7 +48,7 @@ using namespace std;
             Noeud*& rechercheElement(int element, Noeud *&noeudActuel);
 
             //Ajout d'un élément
-            int ajoutElement(int nouvelElement, Noeud* &noeudActuel);
+            int ajoutElement(int nouvelElement, Noeud* &noeudActuel, int hauteur);
             void affichageTable(int quandAfficher, Noeud* &noeudActuel);
 
             Noeud* &racineTable();
@@ -60,6 +57,5 @@ using namespace std;
 
             ArbreBinaireRecherche operator=(const ArbreBinaireRecherche &autreArbre);
             int size();
-            int size()const;
     };
 #endif
