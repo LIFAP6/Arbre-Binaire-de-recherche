@@ -22,7 +22,8 @@ int main()
     Noeud *&noeud = arbre->rechercheElement(3, arbre->racineTable());
     cout << "Élement du noeud : " << noeud->getElement() << endl;
     ArbreBinaireRecherche *arbre2 = new ArbreBinaireRecherche(*arbre);
-    ArbreBinaireRecherche *arbre3 = arbre;
+    ArbreBinaireRecherche *arbre3 = new ArbreBinaireRecherche();
+    *arbre3 = *arbre;
     delete arbre;
     arbre2->affichageTable(0,arbre2->racineTable());
     cout << "Taille de l'arbre : " << arbre2->size() << "." << endl;

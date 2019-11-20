@@ -161,10 +161,10 @@ ArbreBinaireRecherche::~ArbreBinaireRecherche(){
  */
 ArbreBinaireRecherche ArbreBinaireRecherche::operator=(const ArbreBinaireRecherche &autreArbre){
     printf("Appel de l'opérateur d'affectation.\n");
-    ArbreBinaireRecherche nouvelArbre = ArbreBinaireRecherche();
-    if(nouvelArbre.racine != nullptr){
-        nouvelArbre.racine = new Noeud(*autreArbre.racine);
+    if(autreArbre.racine != nullptr){
+        racine = new Noeud(*autreArbre.racine);
     }
+    return *this;
 }
 
 int ArbreBinaireRecherche::size(){
