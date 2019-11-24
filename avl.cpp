@@ -1,14 +1,13 @@
 #include "avl.h"
 
 int AVL::ajoutElement(int nouvelElement, Noeud* &noeudActuel, int hauteur){
-    super();
-    equilibrer(noeudActuel);
+    arbre.ajoutElement(nouvelElement, arbre.racineTable(), hauteur);
 }
 
 int AVL::besoinOperation(Noeud*& noeudActuel){
     //L'arbre est vide
     if(noeudActuel==nullptr){
-        cout << "L'AVL n'a pas de noeud dans son arbre!" << endl;
+        throw std::invalid_argument("L'AVL n'a pas de noeud dans son arbre!");
         return 0;
     }else{
         int hauteurSousArbreDroit = noeudActuel->getElementDroite()->getHauteur();
@@ -41,11 +40,20 @@ void AVL::equilibrer(Noeud* &noeudActuel){
 }
 
 void AVL::AVL_Rotation_Gauche(Noeud* &noeudActuel){
-
+    Noeud *&sousArbreDroite = noeudActuel->getElementDroite();
+    noeudActuel->setElementDroite(sousArbreDroite->getElementGauche());
+    sousArbreDroite->setElementGauche(noeudActuel);
+    noeudActuel = sousArbreDroite;
 }
 
 void AVL::AVL_Rotation_Double_Gauche(Noeud* &noeudActuel){
-
+    Noeud *&sousArbreDroite = noeudActuel->getElementDroite();
+    Noeud *&sousArbreDroiteGauche = sousArbreDroite->getElementDroite();
+    sousArbreDroite->setElementGauche(sousArbreDroiteGauche->getElementDroite());
+    noeudActuel->setElementDroite(sousArbreDroiteGauche->getElementGauche());
+    sousArbreDroiteGauche->setElementGauche(noeudActuel);
+    sousArbreDroiteGauche->setElementDroite(sousArbreDroite);
+    noeudActuel = sousArbreDroiteGauche;
 }
 
 /**
@@ -72,4 +80,13 @@ void AVL::AVL_Rotation_Double_Droite(Noeud* &noeudActuel){
     noeudActuel->setElementGauche(tmpNoeudSousArbreGaucheDroite->getElementDroite());
     tmpNoeudSousArbreGaucheDroite->setElementDroite(noeudActuel);
     noeudActuel = tmpNoeudSousArbreGaucheDroite;
+}
+
+AVL::AVL(){
+    cout << "Création d'une instance d'un arbre Adelson-Velskij et Landis vide!" << endl;
+}
+
+AVL::AVL(const AVL &rawAVL){
+    cout << "Création d'une instance d'un arbre Adelson-Velskij et Landis par copie d'une référence." << endl;
+    arbre = rawAVL.arbre;
 }

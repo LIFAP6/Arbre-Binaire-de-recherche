@@ -7,13 +7,17 @@ using namespace std;
 
 //Table de hashage / Contenu de la cellule
 #include "arbre.h"
+#include "avl.h"
 #include <stdlib.h>
 
 int main()
 {
-    ArbreBinaireRecherche tree;
+    AVL avl = AVL();
     for (int i = 0; i < 20;i++){
-        tree.ajoutElement(rand()%100,tree.racineTable(),0);
+        avl.ajoutElement(rand() / 100, avl.racineTable(), 0);
     }
-    tree.affichageTable(0, tree.racineTable());
+    AVL avl2 = AVL(avl);
+    avl2.affichageTable(0,avl.racineTable());
+    avl2.ajoutElement(55, avl.racineTable(), 0);
+    avl2.affichageTable(0, avl2.racineTable());
 }

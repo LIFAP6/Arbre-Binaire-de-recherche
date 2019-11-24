@@ -48,7 +48,7 @@ using namespace std;
             Noeud*& rechercheElement(int element, Noeud *&noeudActuel);
 
             //Ajout d'un élément
-            int ajoutElement(int nouvelElement, Noeud* &noeudActuel, int hauteur);
+            virtual int ajoutElement(int nouvelElement, Noeud* &noeudActuel, int hauteur);
             void affichageTable(int quandAfficher, Noeud* &noeudActuel);
 
             Noeud* &racineTable();
