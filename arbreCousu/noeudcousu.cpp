@@ -25,10 +25,29 @@ NoeudCousu* &NoeudCousu::getElementDroite(){
     return droite;
 }
 
+int NoeudCousu::getStatus(){
+    return status;
+}
+
 void NoeudCousu::setElementGauche(NoeudCousu*& nouvelleGauche){
     gauche = nouvelleGauche;
 }
 
 void NoeudCousu::setElementDroite(NoeudCousu*& nouvelleDroite){
     droite = nouvelleDroite;
+}
+
+void NoeudCousu::updateStatus(int newStatus){
+    status = newStatus;
+}
+
+bool NoeudCousu::estVraiSousArbreDroit(){
+    return vraiSousArbreDroit;
+}
+
+NoeudCousu*& NoeudCousu::operator=(const NoeudCousu &node){
+    Noeud::setElement(node.getElement());
+}
+NoeudCousu*& NoeudCousu::operator=(const Noeud &node){
+
 }

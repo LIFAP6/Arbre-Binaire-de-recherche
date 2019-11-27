@@ -57,6 +57,7 @@ using namespace std;
             void affichageTable(int quandAfficher, Noeud* &noeudActuel);
 
             Noeud* &racineTable();
+            Noeud *racineTable() const;
 
             ~ArbreBinaireRecherche();
 

@@ -12,12 +12,18 @@ int main()
 {
     ArbreCousu* cousu = new ArbreCousu();
     cousu->ajoutElement(3, cousu->getRacine(),cousu->getRacine());
+    cout << "Element le plus petit " << cousu->getElementLePlusPetit()->getElement() << endl;
     cousu->ajoutElement(4, cousu->getRacine(),cousu->getRacine());
-    cousu->ajoutElement(1, cousu->getRacine(),cousu->getRacine());
-    /*cousu->ajoutElement(2, cousu->getRacine(),cousu->getRacine());
+    cout << "Element le plus petit " << cousu->getElementLePlusPetit()->getElement() << endl;
+    cousu->ajoutElement(2, cousu->getRacine(),cousu->getRacine());
+    cout << "Element le plus petit " << cousu->getElementLePlusPetit()->getElement() << endl;
     cousu->ajoutElement(12, cousu->getRacine(),cousu->getRacine());
-    cousu->ajoutElement(19, cousu->getRacine(),cousu->getRacine());*/
-
+    cout << "Element le plus petit " << cousu->getElementLePlusPetit()->getElement() << endl;
+    cousu->ajoutElement(19, cousu->getRacine(),cousu->getRacine());
+    cout << "Element le plus petit " << cousu->getElementLePlusPetit()->getElement() << endl;
+    cousu->ajoutElement(1, cousu->getRacine(),cousu->getRacine());
+    cout << "Element le plus petit " << cousu->getElementLePlusPetit()->getElement() << endl;
+    cousu->affichageTable();
     delete cousu;
     /*ArbreBinaireRecherche* arbre = new ArbreBinaireRecherche();
     arbre->ajoutElement(3, arbre->racineTable());

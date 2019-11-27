@@ -137,6 +137,10 @@ ArbreBinaireRecherche::ArbreBinaireRecherche(const ArbreBinaireRecherche &autreA
     racine = new Noeud(*autreArbre.racine);
 }
 
+Noeud*ArbreBinaireRecherche::racineTable()const{
+    return racine;
+}
+
 /**
  * Destructeur de l'arbre binaire de recherche
  */

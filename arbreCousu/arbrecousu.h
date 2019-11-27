@@ -31,5 +31,8 @@
 
             //Ajouter élement
             int ajoutElement(int nouvelElement, NoeudCousu* &noeudActuel, NoeudCousu* &dernierNoeudAGauche);
+
+            //Affichage
+            void affichageTable();
     };
 #endif

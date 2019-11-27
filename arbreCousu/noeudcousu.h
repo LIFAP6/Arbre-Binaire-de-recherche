@@ -1,11 +1,18 @@
 #include "../arbre.h"
 #ifndef NOEUDCOUSU
 #define NOEUDCOUSU
+#define PASENCOREPARCOURU 0
+#define DECOUVERT 1
+#define AUCUNEAUTREACTIONAFAIRE 2
     class NoeudCousu:public Noeud{
         private:
             NoeudCousu *gauche;
             NoeudCousu *droite;
             bool vraiSousArbreDroit;
+            int status;
+
+            void affectation(NoeudCousu *&noeudActuel, NoeudCousu *&dernierNoeudAGauche, int element);
+
         public:
             //Constructeur
             NoeudCousu();
@@ -24,9 +31,12 @@
             //Getter
             NoeudCousu *&getElementGauche();
             NoeudCousu *&getElementDroite();
+            int getStatus();
+            bool estVraiSousArbreDroit();
 
             //Setter
             void setElementGauche(NoeudCousu *&enfantGauche);
             void setElementDroite(NoeudCousu *&enfantDroite);
+            void updateStatus(int newStatus);
     };
 #endif

@@ -1,0 +1,8 @@
+
+Arbre cousu:
+  ☐ Constructeur par copie pour l'arbre cousu
+  ☐ Opérateur affectation
+  ☐ Ajout d'un compteur ".size()"
+  ☐ Transformation en arbre cousu
+NoeudCousu:
+  ☐ Ajouter vérification pour la mise à jour du noeud cousu pour vérifier si celui-ci fait parties des possibilitées
