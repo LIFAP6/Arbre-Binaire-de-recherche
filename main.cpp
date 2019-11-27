@@ -6,11 +6,20 @@
 using namespace std;
 
 //Table de hashage / Contenu de la cellule
-#include "arbre.h"
+#include "index.h"
 
 int main()
 {
-    ArbreBinaireRecherche* arbre = new ArbreBinaireRecherche();
+    ArbreCousu* cousu = new ArbreCousu();
+    cousu->ajoutElement(3, cousu->getRacine(),cousu->getRacine());
+    cousu->ajoutElement(4, cousu->getRacine(),cousu->getRacine());
+    cousu->ajoutElement(1, cousu->getRacine(),cousu->getRacine());
+    /*cousu->ajoutElement(2, cousu->getRacine(),cousu->getRacine());
+    cousu->ajoutElement(12, cousu->getRacine(),cousu->getRacine());
+    cousu->ajoutElement(19, cousu->getRacine(),cousu->getRacine());*/
+
+    delete cousu;
+    /*ArbreBinaireRecherche* arbre = new ArbreBinaireRecherche();
     arbre->ajoutElement(3, arbre->racineTable());
     arbre->ajoutElement(4, arbre->racineTable());
     arbre->ajoutElement(1, arbre->racineTable());
@@ -30,5 +39,5 @@ int main()
     delete arbre2;
     arbre3->affichageTable(0, arbre3->racineTable());
     cout << "Taille de l'arbre : " << arbre3->size() << "." << endl;
-    delete arbre3;
+    delete arbre3;*/
 }

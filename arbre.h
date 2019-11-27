@@ -40,6 +40,8 @@ using namespace std;
     class ArbreBinaireRecherche{
         private:
             Noeud *racine;
+
+        protected:
             int sizeRec(int currentSize, Noeud* &noeudActuel);
 
         public:

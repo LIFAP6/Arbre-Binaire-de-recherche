@@ -125,6 +125,10 @@ void Noeud::setElementGauche(Noeud* &nouveauSousArbreGauche){
     gauche = nouveauSousArbreGauche;
 }
 
+void Noeud::setElement(int nouvelElement){
+    element = nouvelElement;
+}
+
 /**
  * Constructeur par copie
  */
