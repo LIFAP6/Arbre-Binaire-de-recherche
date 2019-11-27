@@ -9,6 +9,7 @@ int AVL::ajoutElement(int nouvelElement, Noeud* &noeudActuel, int hauteur){
     }
     arbre.ajoutElement(nouvelElement, arbre.racineTable(), hauteur);
     equilibrer(arbre.racineTable());
+    //Todo -> Mettre à jour la hauteur
 }
 
 int AVL::size(){
