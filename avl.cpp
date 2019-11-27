@@ -1,18 +1,41 @@
 #include "avl.h"
 
 int AVL::ajoutElement(int nouvelElement, Noeud* &noeudActuel, int hauteur){
+    cout << "Ajout de l'élément " << nouvelElement << " dans l'arbre." << endl;
+    if(arbre == ArbreBinaireRecherche() || arbre.size() == 0){
+        cout << "L'arbre est vide!" << endl;
+    }else{
+        cout << "Arbre non vide!" << endl;
+    }
     arbre.ajoutElement(nouvelElement, arbre.racineTable(), hauteur);
+    equilibrer(arbre.racineTable());
+}
+
+int AVL::size(){
+    return arbre.size();
+}
+
+Noeud*& AVL::racineTable(){
+    return arbre.racineTable();
 }
 
 int AVL::besoinOperation(Noeud*& noeudActuel){
     //L'arbre est vide
     if(noeudActuel==nullptr){
-        throw std::invalid_argument("L'AVL n'a pas de noeud dans son arbre!");
-        return 0;
+        //cout << "L'AVL n'a pas de noeud dans son arbre! L'opération est donc annulée." << endl;
+        return -1;
     }else{
-        int hauteurSousArbreDroit = noeudActuel->getElementDroite()->getHauteur();
-        int hauteurSousArbreGauche = noeudActuel->getElementGauche()->getHauteur();
-        return hauteurSousArbreGauche - hauteurSousArbreDroit;
+        if(noeudActuel->getElementDroite() != nullptr && noeudActuel->getElementGauche()){
+            int hauteurSousArbreDroit = noeudActuel->getElementDroite()->getHauteur();
+            int hauteurSousArbreGauche = noeudActuel->getElementGauche()->getHauteur();
+            return hauteurSousArbreGauche - hauteurSousArbreDroit;
+        }else if(noeudActuel->getElementDroite() == nullptr){
+            return 1;
+        }else if(noeudActuel->getElementGauche() == nullptr){
+            return -1;
+        }else{
+            return 0;
+        }
     }
 }
 
@@ -27,7 +50,7 @@ void AVL::equilibrer(Noeud* &noeudActuel){
         {
             AVL_Rotation_Double_Droite(noeudActuel);
         }
-    }else{
+    }else if(difference == -2){
         int differenceDroite = besoinOperation(noeudActuel->getElementDroite());
         if(differenceDroite == -1){
             AVL_Rotation_Gauche(noeudActuel);
@@ -36,6 +59,13 @@ void AVL::equilibrer(Noeud* &noeudActuel){
         {
             AVL_Rotation_Double_Gauche(noeudActuel);
         }
+    }if(difference == -1){
+        //cout << "L'arbre est équilibré!" << endl;
+    }
+    else
+    {
+        equilibrer(noeudActuel->getElementGauche());
+        equilibrer(noeudActuel->getElementDroite());
     }
 }
 
@@ -84,9 +114,16 @@ void AVL::AVL_Rotation_Double_Droite(Noeud* &noeudActuel){
 
 AVL::AVL(){
     cout << "Création d'une instance d'un arbre Adelson-Velskij et Landis vide!" << endl;
+    ArbreBinaireRecherche nouvelArbre = ArbreBinaireRecherche();
+    arbre = nouvelArbre;
 }
 
 AVL::AVL(const AVL &rawAVL){
     cout << "Création d'une instance d'un arbre Adelson-Velskij et Landis par copie d'une référence." << endl;
     arbre = rawAVL.arbre;
+}
+
+void AVL::affichageTable(int quandAfficher, Noeud* &noeudActuel){
+    cout << "Affichage de l'arbre" << endl;
+    arbre.affichageTable(quandAfficher, noeudActuel);
 }

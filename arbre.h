@@ -32,6 +32,7 @@ using namespace std;
 
             Noeud &operator=(const Noeud &autreNoeud);
             bool operator<(const Noeud &autreNoeud);
+            bool operator==(const Noeud &autreNoeud);
     };
 
     class ArbreBinaireRecherche{
@@ -56,6 +57,7 @@ using namespace std;
             ~ArbreBinaireRecherche();
 
             ArbreBinaireRecherche operator=(const ArbreBinaireRecherche &autreArbre);
+            bool operator==(const ArbreBinaireRecherche &premierArbre);
             int size();
     };
 #endif

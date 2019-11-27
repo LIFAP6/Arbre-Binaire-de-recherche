@@ -9,6 +9,7 @@
  * Postcondition : instance initialisée avec une racine vide
  */
 ArbreBinaireRecherche::ArbreBinaireRecherche(){
+    cout << "Constructeur par défaut pour l'arbre binaire de recherche." << endl;
     racine = nullptr;
 }
 
@@ -37,6 +38,19 @@ Noeud*& ArbreBinaireRecherche::rechercheElement(int element, Noeud *&noeudActuel
         returnedNoeud = noeudActuel;
         return returnedNoeud;
     }
+}
+
+bool Noeud::operator==(const Noeud& autreNoeud){
+    bool comparaison = autreNoeud.element == element;
+    if(comparaison == true){
+        comparaison = autreNoeud.gauche == autreNoeud.gauche;
+        if(comparaison == true){
+            comparaison = autreNoeud.droite == autreNoeud.droite;
+        }else{
+            return false;
+        }
+    }
+    return comparaison;
 }
 
 /**
@@ -138,8 +152,19 @@ int Noeud::getHauteur(){
  * Constructeur par copie
  */
 ArbreBinaireRecherche::ArbreBinaireRecherche(const ArbreBinaireRecherche &autreArbre){
-    printf("Constructeur par copie.\n");
-    racine = new Noeud(*autreArbre.racine);
+    printf("Constructeur par copie de l'arbre binaire de recherche.\n");
+    if(autreArbre.racine == nullptr){
+        cout << "La racine de l'arbre de référence est vide!" << endl;
+        racine = nullptr;
+    }
+    else
+    {
+        racine = new Noeud(*autreArbre.racine);
+    }
+}
+
+bool ArbreBinaireRecherche::operator==(const ArbreBinaireRecherche &autreArbre){
+    return racine == autreArbre.racine;
 }
 
 /**
@@ -154,7 +179,7 @@ ArbreBinaireRecherche::~ArbreBinaireRecherche(){
  * Surcharge de l'opérateur d'affectation
  */
 ArbreBinaireRecherche ArbreBinaireRecherche::operator=(const ArbreBinaireRecherche &autreArbre){
-    printf("Appel de l'opérateur d'affectation.\n");
+    printf("Appel de l'opérateur d'affectation pour un arbre.\n");
     if(autreArbre.racine != nullptr){
         racine = new Noeud(*autreArbre.racine);
     }
@@ -184,6 +209,7 @@ int ArbreBinaireRecherche::sizeRec(int currentSize, Noeud*& noeudActuel){
         if(noeudActuel->getElementDroite() != nullptr){
             currentSize = currentSize + sizeRec(currentSize, noeudActuel->getElementDroite());
         }
+        return currentSize;
     }
 }
 

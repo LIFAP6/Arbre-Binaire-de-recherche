@@ -2,7 +2,7 @@
 #include <iostream>
 #ifndef ADELSONVELSKYANDLANDIS
 #define ADELSONVELSKYANDLANDIS
-    class AVL : public ArbreBinaireRecherche{
+    class AVL{
         private:
             ArbreBinaireRecherche arbre;
             int besoinOperation(Noeud* &noeudActuel);
@@ -13,6 +13,9 @@
             void AVL_Rotation_Gauche(Noeud *& pN);
         public:
             int ajoutElement(int nouvelElement, Noeud* &noeudActuel, int hauteur);
+            void affichageTable(int quandAfficher, Noeud *&noeudActuel);
+            int size();
+            Noeud* &racineTable();
             AVL(const AVL &rawAvl);
             AVL();
     };
