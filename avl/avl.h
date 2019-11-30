@@ -1,4 +1,4 @@
-#include "arbre.h"
+#include "../arbre.h"
 #include <iostream>
 #ifndef ADELSONVELSKYANDLANDIS
 #define ADELSONVELSKYANDLANDIS

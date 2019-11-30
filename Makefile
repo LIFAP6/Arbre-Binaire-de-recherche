@@ -4,7 +4,7 @@ main.ex : main.o arbre.o avl.o
 # main.o liste.o et element.o sont plus rêcents
 	g++ -g main.o arbre.o avl.o
 
-main.o : main.cpp arbre.h avl.h
+main.o : main.cpp arbre.h avl/avl.h
 # Le fichier objet main.o doit être remis à jour si certains des fichiers
 # main.cpp liste.h et element.h sont plus rêcents
 	g++ -Wall -ansi -pedantic -c main.cpp
@@ -12,8 +12,8 @@ main.o : main.cpp arbre.h avl.h
 arbre.o : arbre.cpp arbre.h
 	g++ -Wall -c arbre.cpp
 
-avl.o : avl.cpp avl.h
-	g++ -Wall -c avl.cpp
+avl.o : avl/avl.cpp avl/avl.h
+	g++ -Wall -c avl/avl.cpp
 
 clean :
 	-rm *.o *~

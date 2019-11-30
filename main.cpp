@@ -7,7 +7,7 @@ using namespace std;
 
 //Table de hashage / Contenu de la cellule
 #include "arbre.h"
-#include "avl.h"
+#include "avl/avl.h"
 #include <stdlib.h>
 
 int main()
