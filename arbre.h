@@ -24,10 +24,6 @@ using namespace std;
             Noeud *&getElementDroite();
             Noeud *&getElementGauche();
 
-            //const
-            Noeud *&getElementDroite()const;
-            Noeud *&getElementGauche()const;
-
             void setElementGauche(Noeud *&nouveauNoeudGauche);
             void setElementDroite(Noeud *&nouveauNoeudDroite);
 

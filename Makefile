@@ -3,7 +3,6 @@ main.ex : main.o arbre.o arbrecousu.o noeudcousu.o
 # L'executable main.ex doit être remis à jour si certains des fichiers 
 # main.o liste.o et element.o sont plus rêcents
 	g++ -g main.o arbre.o arbrecousu.o noeudcousu.o
-
 main.o : main.cpp arbre.h arbreCousu/arbrecousu.h arbreCousu/noeudcousu.h
 # Le fichier objet main.o doit être remis à jour si certains des fichiers
 # main.cpp liste.h et element.h sont plus rêcents

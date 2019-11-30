@@ -245,6 +245,10 @@ int Noeud::getElement(){
     return element;
 }
 
+int Noeud::getElement()const{
+    return element;
+}
+
 /**
  * Compte le nombre d'éléments
  * Post condition : le nombre d'élements de l'arbre binaire de recherche

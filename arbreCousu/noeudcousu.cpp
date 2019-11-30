@@ -25,6 +25,14 @@ NoeudCousu* &NoeudCousu::getElementDroite(){
     return droite;
 }
 
+NoeudCousu* NoeudCousu::getElementDroite()const{
+    return droite;
+}
+
+NoeudCousu* NoeudCousu::getElementGauche()const{
+    return gauche;
+}
+
 int NoeudCousu::getStatus(){
     return status;
 }
@@ -45,9 +53,39 @@ bool NoeudCousu::estVraiSousArbreDroit(){
     return vraiSousArbreDroit;
 }
 
+/**
+ * Vérifie si le noeud a été parcouru entièrement
+ */
+bool NoeudCousu::estParcouruEntierement(){
+    if(getElementGauche()==nullptr && getElementDroite()==nullptr){
+        return (getStatus() == DECOUVERT || getStatus()==AUCUNEAUTREACTIONAFAIRE);
+    }else if(getElementGauche()==nullptr){
+        return ((getStatus() == DECOUVERT || getStatus() == AUCUNEAUTREACTIONAFAIRE)
+        && (getElementDroite()->estParcouruEntierement()));
+    }else if(!estVraiSousArbreDroit()){
+        return ((getStatus() == DECOUVERT || getStatus() == AUCUNEAUTREACTIONAFAIRE)
+        && (getElementGauche()->estParcouruEntierement()));
+    }else{
+        return ((getStatus() == DECOUVERT || getStatus() == AUCUNEAUTREACTIONAFAIRE)
+        && (getElementGauche()->estParcouruEntierement())
+        && (getElementDroite()->estParcouruEntierement()));
+    }
+}
+
 NoeudCousu*& NoeudCousu::operator=(const NoeudCousu &node){
+    cout << "Constructeur par copie d'un noeud cousu." << endl;
     Noeud::setElement(node.getElement());
+    if(this != &node){
+        Noeud::setElement(node.getElement());
+        if(node.gauche != nullptr){
+            gauche = new NoeudCousu(*node.gauche);
+        }
+        if(node.droite != nullptr){
+            droite = new NoeudCousu(*node.droite);
+        }
+    }
 }
 NoeudCousu*& NoeudCousu::operator=(const Noeud &node){
-
+    Noeud::setElement(node.getElement());
 }
+

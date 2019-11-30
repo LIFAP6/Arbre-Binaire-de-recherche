@@ -31,6 +31,8 @@
             //Getter
             NoeudCousu *&getElementGauche();
             NoeudCousu *&getElementDroite();
+            NoeudCousu *getElementGauche() const;
+            NoeudCousu *getElementDroite() const;
             int getStatus();
             bool estVraiSousArbreDroit();
 
@@ -38,5 +40,8 @@
             void setElementGauche(NoeudCousu *&enfantGauche);
             void setElementDroite(NoeudCousu *&enfantDroite);
             void updateStatus(int newStatus);
+
+            //Status du parcours
+            bool estParcouruEntierement();
     };
 #endif

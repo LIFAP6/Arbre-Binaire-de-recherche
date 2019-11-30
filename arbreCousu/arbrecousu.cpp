@@ -46,14 +46,17 @@ int ArbreCousu::ajoutElement(int nouvelElement, NoeudCousu* &noeudActuel, NoeudC
         NoeudCousu* noeud = new NoeudCousu(nouvelElement,dernierNoeudAGauche);
         noeudActuel->setElementDroite(noeud);
         printf("Ajout de l'élément à droite du noeud %d.\n", noeudActuel->getElement());
+        if(elementLePlusPetit->getElement()>noeud->getElement() && elementLePlusPetit != nullptr){
+            elementLePlusPetit = noeud;
+        }
     }
     else{
         //On passe au sous-arbre de gauche : l'élément est inférieur à celui du noeud
-        if(noeudActuel->getElement()<nouvelElement){
+        if(noeudActuel->getElement()>nouvelElement){
             printf("On passe à gauche.\n");
             ajoutElement(nouvelElement, noeudActuel->getElementGauche(), noeudActuel->getElementGauche());
         }
-        else if(noeudActuel->getElement()>nouvelElement)
+        else if(noeudActuel->getElement()<nouvelElement)
         //On passe au sous-arbre de droite : l'élément est supérieur à celui du noeud
         {
             printf("On passe à droite.\n");
@@ -77,24 +80,16 @@ void ArbreCousu::affichageTable(){
         noeudEncours->updateStatus(DECOUVERT);
         cout << "Arbre cousu." << endl;
         cout << "Liste : " << racine->getElement();
-        while (racine->getStatus() != AUCUNEAUTREACTIONAFAIRE)
+        while (racine->getStatus() != AUCUNEAUTREACTIONAFAIRE && noeudEncours->getElementGauche()==nullptr)
         {
-            //L'élément existe mais n'a pas encore été parcouru
-            while(racine->getElementGauche()!= nullptr && racine->getElementGauche()->getStatus()==PASENCOREPARCOURU){
+            //Possibilité d'aller à gauche
+            if(noeudEncours->getElementGauche()!=nullptr){
                 noeudEncours = noeudEncours->getElementGauche();
-                cout << " " << noeudEncours->getElement();
+                //L'élément a été parcouru une fois
+                cout << " " << racine->getElement();
+                noeudEncours->updateStatus(DECOUVERT);
             }
-            //Nous n'avons pas de sous-arbre droit ici
-            if(racine->getElementDroite() != nullptr && !racine->estVraiSousArbreDroit()){
-                while(racine->getElementDroite() != nullptr && racine->estVraiSousArbreDroit() && racine->getElementDroite()->getStatus() != PASENCOREPARCOURU){
-                    //On remonte au dernier élément en passant à gauche qui a un sous-arbre droit
-                    noeudEncours = noeudEncours->getElementDroite();
-                }
-            }
-            if((racine->getElementGauche() == nullptr || racine->getElementDroite() == nullptr) ||
-            (racine->getElementGauche()->getStatus() == AUCUNEAUTREACTIONAFAIRE && racine->getElementDroite()->getStatus()==AUCUNEAUTREACTIONAFAIRE)){
-                noeudEncours->updateStatus(AUCUNEAUTREACTIONAFAIRE);
-            }
+
         }
         cout << endl;
     }
