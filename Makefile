@@ -4,13 +4,16 @@ main.ex : main.o arbre.o
 # main.o liste.o et element.o sont plus rêcents
 	g++ -g main.o arbre.o
 
-main.o : main.cpp arbre.h
+main.o : main.cpp ArbreBinaireRecherche/arbre.h
 # Le fichier objet main.o doit être remis à jour si certains des fichiers
 # main.cpp liste.h et element.h sont plus rêcents
 	g++ -Wall -ansi -pedantic -c main.cpp
 
-arbre.o : arbre.cpp arbre.h
-	g++ -Wall -c arbre.cpp $(CFLAGS)
+arbre.o : ArbreBinaireRecherche/arbre.cpp ArbreBinaireRecherche/arbre.h
+	g++ -Wall -c ArbreBinaireRecherche/arbre.cpp
+
+noeud.o : ArbreBinaireRecherche/noeud.h ArbreBinaireRecherche/noeud.cpp
+	g++ -Wall ArbreBinaireRecherche/noeud.cpp
 
 clean :
 	-rm *.o *~

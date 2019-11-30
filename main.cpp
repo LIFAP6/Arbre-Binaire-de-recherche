@@ -5,8 +5,7 @@
 #include <iostream>
 using namespace std;
 
-//Table de hashage / Contenu de la cellule
-#include "arbre.h"
+#include "ArbreBinaireRecherche/arbre.h"
 
 int main()
 {
