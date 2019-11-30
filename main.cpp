@@ -6,7 +6,7 @@
 using namespace std;
 
 //Table de hashage / Contenu de la cellule
-#include "arbre.h"
+#include "arbre/arbre.h"
 
 int main()
 {
